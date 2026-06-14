@@ -28,4 +28,4 @@ No unreleased changes.
 - Added automatic creation of the `compile-mods-1.20.1` workspace folder.
 - Added a `flatDir` repository pointing to `compile-mods-1.20.1`.
 - Added safe scanning for compiled `.jar` files in `compile-mods-1.20.1`.
-- Replaced the old hard jar-name assertion behavior with safer jar-name validation and Gradle warnings.
+- Replaced the old strict filename assertion behavior with safer JAR filename validation and Gradle warnings.
