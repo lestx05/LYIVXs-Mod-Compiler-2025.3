@@ -1,108 +1,107 @@
 # LYIVX's Mod Compiler - 2025.3 Fork
 
-This is a small MCreator API-support plugin for MCreator 2025.3 workspaces using the community Forge 1.20.1 generator. It adds an External API entry named `Use Compiled Mods`.
+MCreator API-support plugin for **MCreator 2025.3** and the **Forge 1.20.1** generator. It adds an External API named **Use Compiled Mods**.
 
-When enabled, the API creates and reads a workspace-root folder named `compile-mods-1.20.1`. Place compiled Forge 1.20.1 mod jars in that folder so the workspace can compile and run against them.
+When enabled, the plugin creates and reads this folder in the MCreator workspace root:
+
+```text
+compile-mods-1.20.1/
+```
+
+Place compiled Forge 1.20.1 mod jars there so the workspace can compile and run against them.
 
 ## Compatibility
 
-- MCreator: 2025.3 (`supportedversions` code `2025003`)
-- Minecraft: 1.20.1
-- Loader: Forge
-- Generator: `forge-1.20.1`
-- Verified against the installed Spectrall Forge 1.20.1 Generator V1.3 package for MCreator 2025.3, whose plugin id is `generator-1.20.1` and workspace generator id is `forge-1.20.1`.
+| Target | Supported |
+| --- | --- |
+| MCreator | 2025.3 only (`2025003`) |
+| Minecraft | 1.20.1 only |
+| Loader | Forge only |
+| Generator ID | `forge-1.20.1` |
 
-No support is claimed for MCreator 2026.1, NeoForge, Fabric, or other Minecraft versions.
+No support is claimed for MCreator 2026.1, NeoForge, Fabric, Quilt, Bukkit, or other Minecraft versions.
 
-## Installation
+## Install
 
-1. In MCreator, open `Preferences -> Manage plugins`.
-2. Import `lyivxs-mod-compiler-2025-3.zip`.
-3. Restart MCreator if prompted.
-4. Open or create a Forge 1.20.1 workspace using the community Forge 1.20.1 generator.
-5. Open `Workspace Settings -> External APIs`.
-6. Enable `Use Compiled Mods`.
-7. Regenerate code or reload the Gradle project.
+1. Download `lyivxs-mod-compiler-2025.3-forge-1.20.1.zip` from the latest GitHub Release.
+2. In MCreator, open **Preferences -> Manage plugins**.
+3. Click **Load plugin** and select the ZIP.
+4. Restart MCreator.
+5. Open a Forge 1.20.1 workspace.
+6. Open **Workspace settings -> External APIs**.
+7. Enable **Use Compiled Mods**.
+8. Reload Gradle or run the workspace.
 
-## Adding Compiled Mods
-
-Put Forge 1.20.1 compiled mod jars in this folder at the workspace root:
+Do not install GitHub's source-code ZIP. The installable ZIP must contain `plugin.json` at the ZIP root:
 
 ```text
-compile-mods-1.20.1
+plugin.json
+apis/use_compiled_mods.yaml
 ```
 
-Jar names must follow this pattern:
+## Jar Naming
+
+Jar files in `compile-mods-1.20.1/` must use this format:
 
 ```text
-modname-minecraftversion-modversion.jar
+modname-1.20.1-modversion.jar
 ```
 
-Example:
+Good examples:
 
 ```text
+examplemod-1.20.1-1.0.0.jar
 lyivxsfurnituremod-1.20.1-0.6.1.jar
 ```
 
-The Gradle logic splits the file name at the final dash. For the example above, Gradle sees:
+Bad examples:
 
 ```text
-artifactId = lyivxsfurnituremod-1.20.1
-version = 0.6.1
+examplemod.jar
+examplemod-forge.jar
+examplemod-1.19.2-1.0.0.jar
 ```
 
-Badly named jars are skipped with a warning instead of crashing Gradle.
+If a mod needs dependencies, place those dependency jars in `compile-mods-1.20.1/` too.
 
-## Gradle Behavior
+## Limits
 
-This fork intentionally avoids overriding the generator's `minecraft` or `legacyForge` configuration. The Spectrall 2025.3 generator owns mappings, runs, Forge version, mixins, and reobfuscation setup.
+This plugin does not port mods between Minecraft versions, convert loaders, fix broken external mods, or guarantee that every Forge mod can run inside an MCreator development workspace. Mods can still fail because of missing dependencies, mixins/coremods, side-only loading issues, incompatible Forge versions, or APIs that need a dedicated MCreator plugin.
 
-The API Gradle snippet only:
+Only use compiled jars from sources you trust.
 
-- creates `compile-mods-1.20.1` when missing
-- adds a `flatDir` repository pointing at that folder
-- scans `*.jar` files in the folder
-- validates jar names safely
-- adds valid jars as remapped mod dependencies
-- makes `compileJava`, `runClient`, `runServer`, and `build` depend on the folder creation task when those tasks exist
+## Build Locally
 
-The 2025.3 Spectrall generator uses `net.neoforged.moddev.legacyforge`, which exposes `modImplementation` for remapped Forge mod dependencies. This fork uses `modImplementation` there, and keeps a guarded `fg.deobf` fallback for older ForgeGradle-style environments.
+PowerShell:
 
-## Known Limitations
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\package-plugin.ps1
+```
 
-- Dependencies of compiled mods are not resolved automatically from the jar file. If a compiled mod requires another mod or library, place that dependency in `compile-mods-1.20.1` too, or add it through another compatible Gradle/API setup.
-- Client-only mods may fail on server runs if they are not safe to load server-side.
-- GeckoLib-like libraries may still need the matching MCreator API/plugin if your workspace procedures or generated code need plugin-provided blocks, templates, or codegen support.
-- This plugin does not convert incompatible mods. The jar must already be a Forge 1.20.1 mod.
+Bash:
 
-## Troubleshooting
+```bash
+bash scripts/package-plugin.sh
+```
 
-### The External API does not appear
-
-Confirm the workspace uses generator id `forge-1.20.1` and that MCreator 2025.3 loaded the plugin under `Preferences -> Manage plugins`.
-
-### The folder did not appear
-
-Reload the Gradle project, regenerate code, or run `compileJava`, `runClient`, `runServer`, or `build`. The folder is created at the workspace root, next to `build.gradle`.
-
-### Gradle says a jar was skipped
-
-Rename the jar to the required pattern:
+Both commands create:
 
 ```text
-modname-minecraftversion-modversion.jar
+dist/lyivxs-mod-compiler-2025.3-forge-1.20.1.zip
 ```
 
-### Gradle cannot resolve a dependency
+## Release
 
-Check that the parsed artifact id and version match the jar name. For a jar named `examplemod-1.20.1-2.0.0.jar`, Gradle resolves `compile-mods:examplemod-1.20.1:2.0.0`.
+1. Build the ZIP locally.
+2. Test the ZIP in MCreator 2025.3 with a Forge 1.20.1 workspace.
+3. Confirm that `Use Compiled Mods` appears in **Workspace settings -> External APIs**.
+4. Confirm that `runClient` and `build` work with at least one real Forge 1.20.1 jar.
+5. Push a tag such as `v1.2.0-2025.3`.
 
-### The game launches but the mod fails
+The GitHub Actions workflow packages the plugin and attaches the ZIP to the tag release.
 
-Make sure every required dependency for that compiled mod is also available, and confirm the mod is actually built for Forge 1.20.1.
+## Credits
 
-## Attribution
+Original plugin by **LYIVX** and **Tarantel**. 2024.2-2024.4 compatibility fork reference by **maxhaaa**.
 
-Original LYIVX's Mod Compiler by LYIVX and Tarantel, released under the MIT License. This fork preserves the API concept and attribution while updating the plugin metadata and Gradle injection for MCreator 2025.3 / Forge 1.20.1.
-
-The 2024.2/2024.3/2024.4 fork by maxhaaa was inspected for compatibility context only. This fork does not copy its NeoForge additions or broader version structure.
+This fork keeps MIT attribution and targets MCreator 2025.3 / Forge 1.20.1 only.

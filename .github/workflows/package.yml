@@ -1,0 +1,56 @@
+name: Package plugin
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+env:
+  ZIP_NAME: lyivxs-mod-compiler-2025.3-forge-1.20.1.zip
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install ZIP tools
+        run: sudo apt-get update && sudo apt-get install -y zip unzip
+
+      - name: Package plugin ZIP
+        run: bash scripts/package-plugin.sh
+
+      - name: Verify ZIP root layout
+        run: |
+          set -euxo pipefail
+
+          unzip -l "dist/$ZIP_NAME"
+
+          unzip -Z1 "dist/$ZIP_NAME" | grep -x "plugin.json"
+          unzip -Z1 "dist/$ZIP_NAME" | grep -x "apis/use_compiled_mods.yaml"
+
+          if unzip -Z1 "dist/$ZIP_NAME" | grep -q "^plugin/"; then
+            echo "ERROR: plugin.json must be at the ZIP root, not under plugin/."
+            exit 1
+          fi
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: lyivxs-mod-compiler-2025.3-forge-1.20.1
+          path: dist/${{ env.ZIP_NAME }}
+
+      - name: Create GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v3
+        with:
+          name: LYIVX's Mod Compiler ${{ github.ref_name }}
+          files: dist/${{ env.ZIP_NAME }}
+          generate_release_notes: true
+          make_latest: true

@@ -1,0 +1,41 @@
+name: "Use Compiled Mods"
+forge-1.20.1:
+  gradle: |
+    def compileModsDir = layout.projectDirectory.dir('compile-mods-1.20.1').asFile
+    def compiledModPattern = ~/^(.+)-1\.20\.1-([A-Za-z0-9_.+]+)\.jar$/
+
+    tasks.register('ensureCompiledModsDir') {
+        outputs.dir compileModsDir
+        doLast {
+            if (!compileModsDir.exists()) {
+                compileModsDir.mkdirs()
+            }
+        }
+    }
+
+    repositories {
+        flatDir {
+            name = 'compile-mods'
+            dirs compileModsDir
+        }
+    }
+
+    dependencies {
+        fileTree(dir: compileModsDir, include: '*.jar').each { compileModJar ->
+            def matcher = compileModJar.name =~ compiledModPattern
+            if (matcher.matches()) {
+                def artifactId = "${matcher.group(1)}-1.20.1"
+                def version = matcher.group(2)
+                def dependencyNotation = "compile-mods:${artifactId}:${version}"
+                implementation fg.deobf(dependencyNotation)
+            } else {
+                logger.warn("Skipping invalid compiled mod jar name: ${compileModJar.name}. Expected: modname-1.20.1-modversion.jar")
+            }
+        }
+    }
+
+    ['compileJava', 'runClient', 'runServer', 'build'].each { taskName ->
+        tasks.matching { it.name == taskName }.configureEach {
+            dependsOn 'ensureCompiledModsDir'
+        }
+    }

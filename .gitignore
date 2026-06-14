@@ -1,0 +1,27 @@
+# MCreator / Gradle
+.gradle/
+build/
+out/
+run/
+runs/
+cache/
+tmp/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Packaged plugin builds
+*.zip
+
+# Local test folders
+test-workspace/
+compile-mods-*/

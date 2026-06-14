@@ -1,0 +1,14 @@
+{
+  "id": "lyivxs-mod-compiler-2025-3",
+  "weight": 0,
+  "supportedversions": [
+    2025003
+  ],
+  "info": {
+    "name": "LYIVX's Mod Compiler - 2025.3 Fork",
+    "version": "1.2.0-2025.3",
+    "description": "Adds the Use Compiled Mods external API for Forge 1.20.1 MCreator 2025.3 workspaces.",
+    "author": "Lester Mora, LYIVX, Tarantel",
+    "credits": "Original plugin by LYIVX and Tarantel. 2024.2-2024.4 compatibility fork reference by maxhaaa. This 2025.3 fork keeps MIT attribution and updates the API Gradle injection for Forge 1.20.1 workspaces."
+  }
+}
