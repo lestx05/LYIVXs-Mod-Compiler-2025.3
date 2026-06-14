@@ -65,6 +65,12 @@ examplemod-1.19.2-1.0.0.jar
 
 If a mod needs dependencies, place those dependency JAR files in `compile-mods-1.20.1/` too.
 
+## Runtime Mixins
+
+Some external mods can compile but still fail when `runClient` starts. This is most common with mods that ship mixins without a refmap, or mods whose mixins only work in a normal Forge launcher and not in MCreator's development runtime.
+
+If the log says `No refMap loaded`, `MixinApplyError`, or `Critical injection failure`, the plugin has already loaded the JAR and the failure is inside that external mod. Try removing that JAR, using another version of the mod, or testing the mod in a normal Forge installation.
+
 ## Limits
 
 This plugin does not port mods between Minecraft versions, convert loaders, fix broken external mods, or guarantee that every Forge mod can run inside an MCreator development workspace. Mods can still fail because of missing dependencies, mixins/coremods, side-only loading issues, incompatible Forge versions, or APIs that need a dedicated MCreator plugin.
@@ -97,7 +103,7 @@ dist/lyivxs-mod-compiler-2025.3-forge-1.20.1.zip
 2. Test the ZIP in MCreator 2025.3 with a Forge 1.20.1 workspace.
 3. Confirm that `Use Compiled Mods` appears in **Workspace settings -> External APIs**.
 4. Confirm that `runClient` and `build` work with at least one real Forge 1.20.1 JAR file.
-5. Push a tag such as `v1.2.2-2025.3`.
+5. Push a tag such as `v1.2.3-2025.3`.
 
 The GitHub Actions workflow packages the plugin and attaches the ZIP to the tag release.
 

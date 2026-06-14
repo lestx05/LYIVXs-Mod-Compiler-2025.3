@@ -17,6 +17,45 @@ forge-1.20.1:
         }
     }
 
+    tasks.register('checkCompiledModsCompatibility') {
+        dependsOn 'ensureCompiledModsDir'
+        inputs.files fileTree(dir: compileModsDir, include: '*.jar')
+
+        doLast {
+            fileTree(dir: compileModsDir, include: '*.jar').each { compileModJar ->
+                try {
+                    new java.util.zip.ZipFile(compileModJar).withCloseable { zip ->
+                        def mixinConfigs = zip.entries().toList().findAll { entry ->
+                            entry.name.endsWith('.mixins.json') || (entry.name.toLowerCase().contains('mixin') && entry.name.endsWith('.json'))
+                        }
+
+                        mixinConfigs.each { entry ->
+                            try {
+                                def mixinConfig = zip.getInputStream(entry).getText('UTF-8')
+                                def mixinMetadata = new groovy.json.JsonSlurper().parseText(mixinConfig)
+                                def isMixinConfig = mixinMetadata instanceof Map && (
+                                    mixinMetadata.containsKey('package') ||
+                                    mixinMetadata.containsKey('mixins') ||
+                                    mixinMetadata.containsKey('client') ||
+                                    mixinMetadata.containsKey('server') ||
+                                    mixinMetadata.containsKey('plugin')
+                                )
+
+                                if (isMixinConfig && !mixinMetadata.containsKey('refmap')) {
+                                    logger.warn("Compiled mod ${compileModJar.name} contains mixin config ${entry.name} without a refmap. It may crash in MCreator's development runtime with 'No refMap loaded'. If runClient fails during mixin loading, remove this mod, try another version, or test it in a normal Forge installation.")
+                                }
+                            } catch (Exception ignored) {
+                                logger.warn("Could not inspect mixin metadata ${entry.name} in compiled mod jar: ${compileModJar.name}")
+                            }
+                        }
+                    }
+                } catch (Exception ignored) {
+                    logger.warn("Could not inspect compiled mod jar for mixin metadata: ${compileModJar.name}")
+                }
+            }
+        }
+    }
+
     repositories {
         flatDir {
             name = 'compile-mods'
@@ -41,5 +80,11 @@ forge-1.20.1:
     ['compileJava', 'runClient', 'runServer', 'build'].each { taskName ->
         tasks.matching { it.name == taskName }.configureEach {
             dependsOn 'ensureCompiledModsDir'
+        }
+    }
+
+    ['runClient', 'runServer'].each { taskName ->
+        tasks.matching { it.name == taskName }.configureEach {
+            dependsOn 'checkCompiledModsCompatibility'
         }
     }

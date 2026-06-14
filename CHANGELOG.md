@@ -4,6 +4,12 @@
 
 No unreleased changes.
 
+## 1.2.3-2025.3
+
+- Added a Gradle compatibility check that warns when compiled mod JARs include mixin configs without refmaps.
+- Documented runtime mixin crashes such as `No refMap loaded`, `MixinApplyError`, and `Critical injection failure`.
+- Updated the plugin metadata version for the next installable release.
+
 ## 1.2.2-2025.3
 
 - Replaced free-form Markdown issue templates with guided GitHub Issue Forms.
@@ -28,6 +34,7 @@ No unreleased changes.
 - Standardized the MIT license text so GitHub can detect it.
 - Updated the packaging workflow to call the local Bash package script.
 - Tightened compiled mod JAR filename validation for Forge 1.20.1.
+
 - Ported the plugin metadata to MCreator 2025.3.
 - Updated `supportedversions` to `[2025003]`.
 - Added `plugin/plugin.json` as the release manifest.
