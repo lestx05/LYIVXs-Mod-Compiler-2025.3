@@ -1,0 +1,92 @@
+name: Usage question
+description: Ask for help installing, enabling, or using the plugin.
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form when you are not sure whether something is a bug. It is best for install help, JAR naming, folder location, and Gradle/runtime questions.
+
+  - type: dropdown
+    id: topic
+    attributes:
+      label: What do you need help with?
+      options:
+        - Downloading the correct ZIP
+        - Installing/loading the plugin in MCreator
+        - Finding compile-mods-1.20.1
+        - Naming JAR files correctly
+        - Missing mod dependencies
+        - Gradle reload error
+        - runClient or runServer error
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: Explain what you are trying to do and where you got stuck.
+      placeholder: I enabled Use Compiled Mods, but I am not sure where to put the JAR file.
+    validations:
+      required: true
+
+  - type: input
+    id: plugin_version
+    attributes:
+      label: Plugin version
+      placeholder: v1.2.1-2025.3
+    validations:
+      required: false
+
+  - type: dropdown
+    id: mcreator_version
+    attributes:
+      label: MCreator version
+      options:
+        - 2025.3
+        - Other / unsupported
+        - Not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: generator
+    attributes:
+      label: Workspace generator
+      options:
+        - Forge 1.20.1
+        - Other / unsupported
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: jar_files
+    attributes:
+      label: JAR filenames, if relevant
+      description: Paste exact filenames from compile-mods-1.20.1.
+      placeholder: |
+        examplemod-1.20.1-1.0.0.jar
+        jei-1.20.1-forge-15.20.0.105.jar
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error or log output, if relevant
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: readme_check
+    attributes:
+      label: README check
+      options:
+        - label: I read the install and JAR naming sections in the README.
+          required: true

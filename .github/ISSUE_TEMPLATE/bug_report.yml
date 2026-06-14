@@ -1,0 +1,142 @@
+name: Plugin bug report
+description: Report something broken with the plugin.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Please fill in the fields below so the issue can be reproduced.
+
+        Use this form for plugin bugs only. If you need help installing the ZIP, naming JAR files, or understanding a Gradle error, use the "Usage question" form instead.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Quick checks
+      description: These checks prevent the most common false reports.
+      options:
+        - label: I downloaded the installable ZIP from Releases, not GitHub's "Source code" ZIP.
+          required: true
+        - label: I restarted MCreator after loading the plugin.
+          required: true
+        - label: I am using MCreator 2025.3 with a Forge 1.20.1 workspace.
+          required: true
+        - label: I searched existing issues before opening this one.
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem in plain language.
+      placeholder: The API appears in External APIs, but Gradle reload fails after I enable it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+      placeholder: Gradle should reload and the workspace should compile with the JAR files in compile-mods-1.20.1.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: workflow_step
+    attributes:
+      label: Where does the problem happen?
+      options:
+        - Installing/loading the plugin
+        - Enabling Use Compiled Mods
+        - Reloading Gradle
+        - Running runClient
+        - Running runServer
+        - Building/exporting the workspace
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: plugin_version
+    attributes:
+      label: Plugin version
+      description: Use the version shown in the release or MCreator plugin manager.
+      placeholder: v1.2.1-2025.3
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mcreator_version
+    attributes:
+      label: MCreator version
+      options:
+        - 2025.3
+        - Other / unsupported
+    validations:
+      required: true
+
+  - type: dropdown
+    id: generator
+    attributes:
+      label: Workspace generator
+      options:
+        - Forge 1.20.1
+        - Other / unsupported
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: jar_files
+    attributes:
+      label: JAR files in compile-mods-1.20.1
+      description: List the exact filenames. Do not summarize them.
+      placeholder: |
+        examplemod-1.20.1-1.0.0.jar
+        jei-1.20.1-forge-15.20.0.105.jar
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps are easiest to follow.
+      placeholder: |
+        1. Install the plugin ZIP from Releases.
+        2. Restart MCreator.
+        3. Open a Forge 1.20.1 workspace.
+        4. Enable Use Compiled Mods.
+        5. Reload Gradle.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Full Gradle error or log output
+      description: Paste the complete relevant error. This field is formatted automatically.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Extra context
+      description: Add screenshots, links, or anything else that may help.
+    validations:
+      required: false

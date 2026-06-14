@@ -1,0 +1,77 @@
+name: Compatibility request
+description: Request support for another MCreator, Minecraft, loader, or generator version.
+title: "[Compatibility]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This plugin currently targets MCreator 2025.3 and Forge 1.20.1 only. Use this form to request a future compatibility target.
+
+  - type: input
+    id: mcreator_version
+    attributes:
+      label: Requested MCreator version
+      placeholder: 2026.1
+    validations:
+      required: true
+
+  - type: input
+    id: minecraft_version
+    attributes:
+      label: Requested Minecraft version
+      placeholder: 1.21.8
+    validations:
+      required: true
+
+  - type: dropdown
+    id: loader
+    attributes:
+      label: Requested loader
+      options:
+        - Forge
+        - NeoForge
+        - Fabric
+        - Quilt
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: generator_id
+    attributes:
+      label: Generator ID or generator link
+      description: Paste the generator ID or a link to the generator/plugin page if you know it.
+      placeholder: forge-1.21.8
+    validations:
+      required: false
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why is this needed?
+      description: Explain the workspace or modding use case.
+      placeholder: I maintain a workspace on MCreator 2026.1 and need to test against compiled Forge 1.21.8 mods.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: can_test
+    attributes:
+      label: Can you test builds for this target?
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: acknowledgement
+    attributes:
+      label: Acknowledgement
+      options:
+        - label: I understand this target is not supported until it has been tested.
+          required: true
+        - label: I am not reporting a bug in the current Forge 1.20.1 release.
+          required: true

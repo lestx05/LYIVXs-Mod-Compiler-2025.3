@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-No unreleased changes.
+- Replaced free-form Markdown issue templates with guided GitHub Issue Forms.
+- Added a usage-question form for install, JAR naming, folder, dependency, and Gradle help.
+- Added issue-template contact links for the latest release and general MCreator support.
 
 ## 1.2.1-2025.3
 

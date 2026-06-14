@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Download the installable ZIP
+    url: https://github.com/lestx05/LYIVXs-Mod-Compiler-2025.3/releases/latest
+    about: Use the asset named lyivxs-mod-compiler-2025.3-forge-1.20.1.zip, not GitHub's Source code ZIP.
+  - name: General MCreator help
+    url: https://mcreator.net/forum
+    about: Use the MCreator forum for general MCreator questions that are not caused by this plugin.

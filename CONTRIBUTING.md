@@ -14,11 +14,13 @@ Please do not add support claims for other versions unless they are tested.
 
 ## Good issues include
 
-- MCreator version
-- Forge generator version
-- Full Gradle error or log output
-- Exact jar filenames inside `compile-mods-1.20.1`
-- Steps to reproduce
+Use the issue forms so reports are easy to reproduce:
+
+- **Plugin bug report** for broken behavior in the supported MCreator 2025.3 / Forge 1.20.1 target.
+- **Usage question** for install help, JAR naming, folder location, dependency questions, or unclear Gradle errors.
+- **Compatibility request** for another MCreator, Minecraft, loader, or generator version.
+
+Good bug reports include exact JAR filenames inside `compile-mods-1.20.1`, full Gradle output, and numbered steps to reproduce.
 
 ## Pull requests
 
