@@ -41,7 +41,7 @@ jobs:
           fi
 
       - name: Upload workflow artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v6
         with:
           name: lyivxs-mod-compiler-2025.3-forge-1.20.1
           path: dist/${{ env.ZIP_NAME }}
