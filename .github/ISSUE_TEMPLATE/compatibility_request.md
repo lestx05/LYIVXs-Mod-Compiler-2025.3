@@ -2,7 +2,7 @@
 name: Compatibility request
 about: Request support for another MCreator, Minecraft, or loader version
 title: "[Compatibility]: "
-labels: compatibility
+labels: enhancement
 assignees: ""
 ---
 

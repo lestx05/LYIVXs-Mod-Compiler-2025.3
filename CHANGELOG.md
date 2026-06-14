@@ -2,15 +2,24 @@
 
 ## Unreleased
 
+No unreleased changes.
+
+## 1.2.1-2025.3
+
+- Allowed compiled mod JAR versions with hyphens, such as `forge-15.20.0.105`.
+- Created `compile-mods-1.20.1` during Gradle configuration so the folder appears after enabling the API.
+- Cleaned Gradle folder-creation formatting.
+- Fixed small README wording issues around API support and JAR naming.
+- Updated the compatibility issue template to use an existing GitHub label.
+
+## 1.2.0-2025.3
+
 - Simplified the public repository layout.
 - Moved user and release instructions into `README.md`.
 - Removed empty or duplicate folders from the tracked source.
 - Standardized the MIT license text so GitHub can detect it.
 - Updated the packaging workflow to call the local Bash package script.
-- Tightened compiled mod jar filename validation for Forge 1.20.1.
-
-## 1.2.0-2025.3
-
+- Tightened compiled mod JAR filename validation for Forge 1.20.1.
 - Ported the plugin metadata to MCreator 2025.3.
 - Updated `supportedversions` to `[2025003]`.
 - Added `plugin/plugin.json` as the release manifest.

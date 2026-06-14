@@ -1,6 +1,6 @@
 # LYIVX's Mod Compiler - 2025.3 Fork
 
-MCreator API-support plugin for **MCreator 2025.3** and the **Forge 1.20.1** generator. It adds an External API named **Use Compiled Mods**.
+MCreator API support plugin for **MCreator 2025.3** and the **Forge 1.20.1** generator. It adds an External API named **Use Compiled Mods**.
 
 When enabled, the plugin creates and reads this folder in the MCreator workspace root:
 
@@ -8,7 +8,7 @@ When enabled, the plugin creates and reads this folder in the MCreator workspace
 compile-mods-1.20.1/
 ```
 
-Place compiled Forge 1.20.1 mod jars there so the workspace can compile and run against them.
+Place compiled Forge 1.20.1 mod JAR files there so the workspace can compile and run against them.
 
 ## Compatibility
 
@@ -39,9 +39,9 @@ plugin.json
 apis/use_compiled_mods.yaml
 ```
 
-## Jar Naming
+## JAR Naming
 
-Jar files in `compile-mods-1.20.1/` must use this format:
+JAR files in `compile-mods-1.20.1/` must use this format:
 
 ```text
 modname-1.20.1-modversion.jar
@@ -52,6 +52,7 @@ Good examples:
 ```text
 examplemod-1.20.1-1.0.0.jar
 lyivxsfurnituremod-1.20.1-0.6.1.jar
+jei-1.20.1-forge-15.20.0.105.jar
 ```
 
 Bad examples:
@@ -62,13 +63,13 @@ examplemod-forge.jar
 examplemod-1.19.2-1.0.0.jar
 ```
 
-If a mod needs dependencies, place those dependency jars in `compile-mods-1.20.1/` too.
+If a mod needs dependencies, place those dependency JAR files in `compile-mods-1.20.1/` too.
 
 ## Limits
 
 This plugin does not port mods between Minecraft versions, convert loaders, fix broken external mods, or guarantee that every Forge mod can run inside an MCreator development workspace. Mods can still fail because of missing dependencies, mixins/coremods, side-only loading issues, incompatible Forge versions, or APIs that need a dedicated MCreator plugin.
 
-Only use compiled jars from sources you trust.
+Only use compiled JAR files from sources you trust.
 
 ## Build Locally
 
@@ -95,8 +96,8 @@ dist/lyivxs-mod-compiler-2025.3-forge-1.20.1.zip
 1. Build the ZIP locally.
 2. Test the ZIP in MCreator 2025.3 with a Forge 1.20.1 workspace.
 3. Confirm that `Use Compiled Mods` appears in **Workspace settings -> External APIs**.
-4. Confirm that `runClient` and `build` work with at least one real Forge 1.20.1 jar.
-5. Push a tag such as `v1.2.0-2025.3`.
+4. Confirm that `runClient` and `build` work with at least one real Forge 1.20.1 JAR file.
+5. Push a tag such as `v1.2.1-2025.3`.
 
 The GitHub Actions workflow packages the plugin and attaches the ZIP to the tag release.
 
