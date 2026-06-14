@@ -97,7 +97,7 @@ dist/lyivxs-mod-compiler-2025.3-forge-1.20.1.zip
 2. Test the ZIP in MCreator 2025.3 with a Forge 1.20.1 workspace.
 3. Confirm that `Use Compiled Mods` appears in **Workspace settings -> External APIs**.
 4. Confirm that `runClient` and `build` work with at least one real Forge 1.20.1 JAR file.
-5. Push a tag such as `v1.2.1-2025.3`.
+5. Push a tag such as `v1.2.2-2025.3`.
 
 The GitHub Actions workflow packages the plugin and attaches the ZIP to the tag release.
 

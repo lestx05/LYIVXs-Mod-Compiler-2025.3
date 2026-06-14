@@ -2,9 +2,15 @@
 
 ## Unreleased
 
+No unreleased changes.
+
+## 1.2.2-2025.3
+
 - Replaced free-form Markdown issue templates with guided GitHub Issue Forms.
 - Added a usage-question form for install, JAR naming, folder, dependency, and Gradle help.
 - Added issue-template contact links for the latest release and general MCreator support.
+- Replaced the old ForgeGradle `fg.deobf(...)` dependency call with ModDevGradle's `modImplementation` configuration for MCreator 2025.3 Forge 1.20.1 workspaces.
+- Fixed the plugin metadata version for the next installable release.
 
 ## 1.2.1-2025.3
 
