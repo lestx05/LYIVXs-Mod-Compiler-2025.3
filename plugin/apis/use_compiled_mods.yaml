@@ -2,7 +2,7 @@ name: "Use Compiled Mods"
 forge-1.20.1:
   gradle: |
     def compileModsDir = layout.projectDirectory.dir('compile-mods-1.20.1').asFile
-    def compiledModPattern = ~/^(.+)-1\.20\.1-([A-Za-z0-9_.+]+)\.jar$/
+    def compiledModPattern = ~/^(.+)-1\.20\.1-([A-Za-z0-9_.+-]+)\.jar$/
 
     tasks.register('ensureCompiledModsDir') {
         outputs.dir compileModsDir
